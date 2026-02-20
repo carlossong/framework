@@ -68,6 +68,7 @@ class UserController extends Controller
                 'password' => $password
             ]);
 
+            $_SESSION['success_message'] = 'User successfully created!';
             header('Location: /users');
             exit;
         }
@@ -118,6 +119,7 @@ class UserController extends Controller
                 ]);
             }
 
+            $_SESSION['success_message'] = 'User successfully updated!';
             header('Location: /users');
             exit;
         }
@@ -133,6 +135,7 @@ class UserController extends Controller
             }
 
             $this->userModel->delete($id);
+            $_SESSION['success_message'] = 'User successfully deleted!';
             header('Location: /users');
             exit;
         }

@@ -6,6 +6,8 @@
     <title><?= htmlspecialchars($title ?? 'Mini Framework') ?></title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -51,7 +53,38 @@
             <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
                 &copy; <?= date('Y') ?> Mini Framework. Built with PHP and Tailwind CSS.
             </div>
-        </footer>
     </div>
+
+    <!-- Global SweetAlert triggers -->
+    <script>
+        function confirmDeletion(event, form) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#0d9488', // primary teal
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        }
+    </script>
+    <?php if (isset($_SESSION['success_message'])): ?>
+        <script>
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "<?= addslashes($_SESSION['success_message']) ?>",
+              showConfirmButton: false,
+              timer: 1500
+            });
+        </script>
+        <?php unset($_SESSION['success_message']); ?>
+    <?php endif; ?>
 </body>
 </html>

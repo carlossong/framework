@@ -47,7 +47,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <a href="/users/<?= $user['id'] ?>/edit" class="text-primary hover:text-secondary mr-3 text-medium">Edit</a>
                                         <?php if ($user['id'] !== $_SESSION['user_id']): ?>
-                                            <form action="/users/<?= $user['id'] ?>/delete" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                            <form action="/users/<?= $user['id'] ?>/delete" method="POST" class="inline" onsubmit="confirmDeletion(event, this)">
                                                 <button type="submit" class="text-red-600 hover:text-red-900 font-medium">Delete</button>
                                             </form>
                                         <?php else: ?>
