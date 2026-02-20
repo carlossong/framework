@@ -1,0 +1,17 @@
+{
+    "name": "josecarlos/mini-framework",
+    "description": "Mini Framework",
+    "type": "project",
+    "authors": [
+        {
+            "name": "José Carlos",
+            "email": "carlossong@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
