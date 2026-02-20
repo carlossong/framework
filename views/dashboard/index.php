@@ -13,7 +13,7 @@
             <div class="px-4 py-5 sm:p-6">
                 <dl>
                     <dt class="text-sm font-medium text-gray-500 truncate">Total Users</dt>
-                    <dd class="mt-1 text-3xl font-semibold text-gray-900">1</dd>
+                    <dd class="mt-1 text-3xl font-semibold text-gray-900"><?= $total_users ?></dd>
                 </dl>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="px-4 py-5 sm:p-6">
                 <dl>
                     <dt class="text-sm font-medium text-gray-500 truncate">Active Sessions</dt>
-                    <dd class="mt-1 text-3xl font-semibold text-gray-900">1</dd>
+                    <dd class="mt-1 text-3xl font-semibold text-gray-900"><?= $active_sessions ?></dd>
                 </dl>
             </div>
         </div>
