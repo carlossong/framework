@@ -1,1 +1,9 @@
-/package-lock.json
+/node_modules/
+/vendor/
+/database/*.sqlite
+/database/*.sqlite-journal
+/.env
+/.idea/
+/.vscode/
+.DS_Store
+*.log

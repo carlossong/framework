@@ -6,7 +6,7 @@
             <h2 class="text-3xl font-extrabold text-gray-900">Manage Users</h2>
             <p class="mt-2 text-sm text-gray-600">A list of all users in your application.</p>
         </div>
-        <a href="/users/create" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition">
+        <a href="/users/create" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-secondary active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
             Add User
         </a>
     </div>

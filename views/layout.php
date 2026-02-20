@@ -4,22 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($title ?? 'Mini Framework') ?></title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Local Tailwind CSS -->
+    <link rel="stylesheet" href="/css/app.css">
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0d9488', // teal-600
-                        secondary: '#115e59', // teal-800
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
     <div class="min-h-screen flex flex-col">

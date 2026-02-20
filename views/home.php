@@ -7,7 +7,7 @@
             You have successfully set up a PHP Mini Framework using PSR-4 autoloading, a custom MVC architecture, a simple database abstraction layer, and modern UI styling with Tailwind CSS.
         </p>
         <div class="flex space-x-4">
-            <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-secondary shadow transition duration-150 ease-in-out">
+            <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-secondary active:scale-95 shadow transition duration-150 ease-in-out">
                 Get Started
             </a>
             <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 shadow transition duration-150 ease-in-out">
