@@ -16,3 +16,11 @@ $router->post('/register', [\App\Controllers\AuthController::class, 'register'])
 $router->post('/logout', [\App\Controllers\AuthController::class, 'logout']);
 
 $router->get('/dashboard', [\App\Controllers\DashboardController::class, 'index']);
+
+// User CRUD Routes
+$router->get('/users', [\App\Controllers\UserController::class, 'index']);
+$router->get('/users/create', [\App\Controllers\UserController::class, 'create']);
+$router->post('/users/create', [\App\Controllers\UserController::class, 'store']);
+$router->get('/users/(\d+)/edit', [\App\Controllers\UserController::class, 'edit']);
+$router->post('/users/(\d+)/edit', [\App\Controllers\UserController::class, 'update']);
+$router->post('/users/(\d+)/delete', [\App\Controllers\UserController::class, 'destroy']);

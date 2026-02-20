@@ -22,14 +22,20 @@ class Router
         $this->routes[] = compact('method', 'uri', 'action');
     }
 
-    public function dispatch(string $uri, string $method): mixed
+    public function dispatch(string $uri, string $requestMethod): mixed
     {
         foreach ($this->routes as $route) {
-            if ($route['uri'] === $uri && $route['method'] === $method) {
+            // Convert route like '/users/(\d+)/edit' to a valid regex
+            $pattern = "#^" . $route['uri'] . "$#";
+            
+            if ($route['method'] === $requestMethod && preg_match($pattern, $uri, $matches)) {
+                // Remove the full match from the beginning
+                array_shift($matches);
+
                 $action = $route['action'];
 
                 if (is_callable($action)) {
-                    return call_user_func($action);
+                    return call_user_func_array($action, $matches);
                 }
 
                 if (is_array($action)) {
@@ -38,7 +44,7 @@ class Router
                     if (class_exists($class)) {
                         $controller = new $class();
                         if (method_exists($controller, $method)) {
-                            return call_user_func([$controller, $method]);
+                            return call_user_func_array([$controller, $method], $matches);
                         }
                     }
                 }
