@@ -10,7 +10,7 @@ if (!function_exists('component')) {
         if (file_exists($_viewPath)) {
             require $_viewPath;
         } else {
-            echo "Component [{$_component_name}] not found.";
+            echo "Componente [{$_component_name}] não encontrado.";
         }
     }
 }

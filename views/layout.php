@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($title ?? 'Mini Framework') ?></title>
-    <!-- Local Tailwind CSS -->
+    <!-- Tailwind CSS Local -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -16,32 +16,32 @@
                 <a href="/" class="text-3xl font-bold tracking-tight text-primary hover:text-secondary transition">Mini Framework</a>
                 <nav class="flex space-x-4">
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="/dashboard" class="text-gray-600 hover:text-gray-900 font-medium self-center">Dashboard</a>
+                        <a href="/dashboard" class="text-gray-600 hover:text-gray-900 font-medium self-center">Painel</a>
                         <?php if (is_admin()): ?>
-                            <!-- Config Dropdown -->
+                            <!-- Dropdown de Configuração -->
                             <div class="relative self-center">
                                 <button type="button" id="config-menu-button" class="text-gray-600 hover:text-gray-900 font-medium inline-flex items-center focus:outline-none">
-                                    Config
+                                    Configurações
                                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                                 </button>
-                                <!-- Dropdown Menu -->
+                                <!-- Menu Dropdown -->
                                 <div id="config-menu" class="absolute right-0 mt-2 w-48 z-50 hidden">
                                     <div class="bg-white rounded-md shadow-lg py-1 border border-gray-100">
-                                        <a href="/users" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary transition">Users</a>
-                                        <a href="/roles" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary transition">Roles</a>
-                                        <a href="/permissions" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary transition">Permissions</a>
+                                        <a href="/users" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary transition">Usuários</a>
+                                        <a href="/roles" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary transition">Funções</a>
+                                        <a href="/permissions" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary transition">Permissões</a>
                                     </div>
                                 </div>
                             </div>
                         <?php endif; ?>
                         <span class="text-gray-400 self-center">|</span>
-                        <span class="text-gray-600 self-center">Welcome, <?= htmlspecialchars($_SESSION['user_name']) ?>!</span>
+                        <span class="text-gray-600 self-center">Bem-vindo, <?= htmlspecialchars($_SESSION['user_name']) ?>!</span>
                         <form action="/logout" method="POST" class="inline">
-                            <button type="submit" class="text-red-500 hover:text-red-700 font-medium">Logout</button>
+                            <button type="submit" class="text-red-500 hover:text-red-700 font-medium">Sair</button>
                         </form>
                     <?php else: ?>
                         <a href="/login" class="text-gray-600 hover:text-gray-900 font-medium">Login</a>
-                        <a href="/register" class="bg-primary text-white px-3 py-1 rounded hover:bg-secondary font-medium transition">Register</a>
+                        <a href="/register" class="bg-primary text-white px-3 py-1 rounded hover:bg-secondary font-medium transition">Cadastrar-se</a>
                     <?php endif; ?>
                 </nav>
             </div>
@@ -55,23 +55,23 @@
         
         <footer class="bg-white border-t border-gray-200 mt-auto">
             <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
-                &copy; <?= date('Y') ?> Mini Framework. Built with PHP and Tailwind CSS.
+                &copy; <?= date('Y') ?> Mini Framework. Desenvolvido com PHP e Tailwind CSS.
             </div>
-    </div>
+        </footer>
 
-    <!-- Global Base Scripts -->
+    <!-- Scripts Base Globais -->
     <script>
-        // Dropdown toggle logic
+        // Lógica de alternância do dropdown
         document.addEventListener('click', function(event) {
             var menu = document.getElementById('config-menu');
             var button = document.getElementById('config-menu-button');
             if (!menu || !button) return;
             
-            // If clicked on the button, toggle the menu
+            // Se clicar no botão, alterna o menu
             if (button.contains(event.target)) {
                 menu.classList.toggle('hidden');
             } 
-            // If clicked outside both menu and button, close the menu
+            // Se clicar fora do menu e do botão, fecha o menu
             else if (!menu.contains(event.target)) {
                 menu.classList.add('hidden');
             }
@@ -80,13 +80,13 @@
         function confirmDeletion(event, form) {
             event.preventDefault();
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Tem certeza?',
+                text: "Você não poderá reverter isso!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#0d9488', // primary teal
+                confirmButtonColor: '#0d9488', // cor primária teal
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Sim, deletar!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();

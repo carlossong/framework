@@ -23,7 +23,7 @@ class DashboardController extends Controller
         $activeSessions = count(glob($sessionPath . '/sess_*'));
 
         $this->view('dashboard/index', [
-            'title' => 'Dashboard',
+            'title' => 'Painel de Controle',
             'user_name' => $_SESSION['user_name'],
             'total_users' => $totalUsers,
             'active_sessions' => $activeSessions > 0 ? $activeSessions : 1

@@ -3,11 +3,11 @@
 <div class="py-6 sm:px-0">
     <div class="mb-6 flex items-center justify-between">
         <div>
-            <h2 class="text-3xl font-extrabold text-gray-900">Create User</h2>
-            <p class="mt-2 text-sm text-gray-600">Add a new user to the system.</p>
+            <h2 class="text-3xl font-extrabold text-gray-900">Criar Usuário</h2>
+            <p class="mt-2 text-sm text-gray-600">Adicionar um novo usuário ao sistema.</p>
         </div>
         <a href="/users" class="text-sm font-medium text-primary hover:text-secondary">
-            &larr; Back to users
+            &larr; Voltar para usuários
         </a>
     </div>
 
@@ -20,15 +20,15 @@
             <?php endif; ?>
 
             <form action="/users/create" method="POST" class="space-y-6">
-                <?php component('input', ['name' => 'name', 'label' => 'Name', 'required' => true]); ?>
-                <?php component('input', ['name' => 'email', 'type' => 'email', 'label' => 'Email address', 'autocomplete' => 'email', 'required' => true]); ?>
-                <?php component('input', ['type' => 'password', 'name' => 'password', 'label' => 'Password', 'required' => true]); ?>
+                <?php component('input', ['name' => 'name', 'label' => 'Nome', 'required' => true]); ?>
+                <?php component('input', ['name' => 'email', 'type' => 'email', 'label' => 'Endereço de e-mail', 'autocomplete' => 'email', 'required' => true]); ?>
+                <?php component('input', ['type' => 'password', 'name' => 'password', 'label' => 'Senha', 'required' => true]); ?>
 
                 <div class="space-y-1">
-                    <label for="role_id" class="block text-sm font-medium text-gray-700">Role</label>
+                    <label for="role_id" class="block text-sm font-medium text-gray-700">Função</label>
                     <div class="mt-1">
                         <select id="role_id" name="role_id" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
-                            <option value="">Select a role...</option>
+                            <option value="">Selecione uma função...</option>
                             <?php foreach ($roles as $role): ?>
                                 <option value="<?= $role['id'] ?>"><?= htmlspecialchars($role['name']) ?></option>
                             <?php endforeach; ?>
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="pt-2">
-                    <?php component('button', ['text' => 'Save User', 'class' => 'w-full active:scale-95 transition-all']); ?>
+                    <?php component('button', ['text' => 'Salvar Usuário', 'class' => 'w-full active:scale-95 transition-all']); ?>
                 </div>
             </form>
         </div>

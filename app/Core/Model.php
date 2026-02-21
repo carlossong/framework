@@ -58,7 +58,7 @@ abstract class Model
         $sql = "UPDATE {$this->table} SET {$setClause} WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         
-        $data['id'] = $id; // Ensure ID is in the payload for the prepared statement
+        $data['id'] = $id; // Garante que o ID esteja no payload para o prepared statement
         return $stmt->execute($data);
     }
 

@@ -25,7 +25,7 @@ class Router
     public function dispatch(string $uri, string $requestMethod): mixed
     {
         foreach ($this->routes as $route) {
-            // Convert route like '/users/(\d+)/edit' to a valid regex
+            // Converte rota como '/users/(\d+)/edit' para uma regex válida
             $pattern = "#^" . $route['uri'] . "$#";
             
             if ($route['method'] === $requestMethod && preg_match($pattern, $uri, $matches)) {
@@ -57,7 +57,7 @@ class Router
     protected function abort(int $code = 404): void
     {
         http_response_code($code);
-        echo "{$code} Not Found";
+        echo "{$code} Não Encontrado";
         exit;
     }
 }

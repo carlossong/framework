@@ -12,8 +12,8 @@ class PermissionController extends Controller
 
     public function __construct()
     {
-        if (!isset($_SESSION['user_id']) || !is_admin()) { // Temporary auth logic until we fully switch
-            $_SESSION['error_message'] = 'Access denied.';
+        if (!isset($_SESSION['user_id']) || !is_admin()) { // Lógica de autenticação temporária até mudarmos completamente
+            $_SESSION['error_message'] = 'Acesso negado.';
             header('Location: /dashboard');
             exit;
         }
@@ -25,14 +25,14 @@ class PermissionController extends Controller
     {
         $permissions = $this->permissionModel->all();
         $this->view('permissions/index', [
-            'title' => 'Manage Permissions',
+            'title' => 'Gerenciar Permissões',
             'permissions' => $permissions
         ]);
     }
 
     public function create()
     {
-        $this->view('permissions/create', ['title' => 'Create Permission']);
+        $this->view('permissions/create', ['title' => 'Criar Permissão']);
     }
 
     public function store()
@@ -42,7 +42,7 @@ class PermissionController extends Controller
             $description = trim($_POST['description'] ?? '');
 
             if (empty($name)) {
-                $this->view('permissions/create', ['title' => 'Create Permission', 'error' => 'Name is required.']);
+                $this->view('permissions/create', ['title' => 'Criar Permissão', 'error' => 'O nome é obrigatório.']);
                 return;
             }
 
@@ -51,7 +51,7 @@ class PermissionController extends Controller
                 'description' => $description
             ]);
 
-            $_SESSION['success_message'] = 'Permission created!';
+            $_SESSION['success_message'] = 'Permissão criada!';
             header('Location: /permissions');
             exit;
         }
@@ -66,7 +66,7 @@ class PermissionController extends Controller
         }
 
         $this->view('permissions/edit', [
-            'title' => 'Edit Permission',
+            'title' => 'Editar Permissão',
             'permission' => $permission
         ]);
     }
@@ -79,7 +79,7 @@ class PermissionController extends Controller
 
             if (empty($name)) {
                 $permission = $this->permissionModel->find($id);
-                $this->view('permissions/edit', ['title' => 'Edit Permission', 'permission' => $permission, 'error' => 'Name is required.']);
+                $this->view('permissions/edit', ['title' => 'Editar Permissão', 'permission' => $permission, 'error' => 'O nome é obrigatório.']);
                 return;
             }
 
@@ -88,7 +88,7 @@ class PermissionController extends Controller
                 'description' => $description
             ]);
 
-            $_SESSION['success_message'] = 'Permission updated!';
+            $_SESSION['success_message'] = 'Permissão atualizada!';
             header('Location: /permissions');
             exit;
         }
@@ -98,7 +98,7 @@ class PermissionController extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->permissionModel->delete($id);
-            $_SESSION['success_message'] = 'Permission deleted!';
+            $_SESSION['success_message'] = 'Permissão excluída!';
             header('Location: /permissions');
             exit;
         }

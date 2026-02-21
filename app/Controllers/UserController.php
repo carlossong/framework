@@ -13,9 +13,9 @@ class UserController extends Controller
 
     public function __construct()
     {
-        // Protect all User CRUD routes - Must be logged in and be an admin
+        // Protege todas as rotas CRUD de Usuário - Deve estar logado e ser um administrador
         if (!isset($_SESSION['user_id']) || !is_admin()) {
-            $_SESSION['error_message'] = 'You do not have permission to access this area.';
+            $_SESSION['error_message'] = 'Você não tem permissão para acessar esta área.';
             header('Location: /dashboard');
             exit;
         }
@@ -31,7 +31,7 @@ class UserController extends Controller
         $users = $stmt->fetchAll();
 
         $this->view('users/index', [
-            'title' => 'Manage Users',
+            'title' => 'Gerenciar Usuários',
             'users' => $users
         ]);
     }
@@ -40,7 +40,7 @@ class UserController extends Controller
     {
         $roles = $this->roleModel->all();
         $this->view('users/create', [
-            'title' => 'Create User',
+            'title' => 'Criar Usuário',
             'roles' => $roles
         ]);
     }
@@ -54,13 +54,13 @@ class UserController extends Controller
 
             $role_id = $_POST['role_id'] ?? null;
 
-            // Basic validation
+            // Validação básica
             if (empty($name) || empty($email) || empty($password) || empty($role_id)) {
                 $roles = $this->roleModel->all();
                 $this->view('users/create', [
-                    'title' => 'Create User',
+                    'title' => 'Criar Usuário',
                     'roles' => $roles,
-                    'error' => 'All fields are required.'
+                    'error' => 'Todos os campos são obrigatórios.'
                 ]);
                 return;
             }
@@ -68,9 +68,9 @@ class UserController extends Controller
             if ($this->userModel->findByEmail($email)) {
                 $roles = $this->roleModel->all();
                 $this->view('users/create', [
-                    'title' => 'Create User',
+                    'title' => 'Criar Usuário',
                     'roles' => $roles,
-                    'error' => 'Email is already in use.'
+                    'error' => 'O e-mail já está em uso.'
                 ]);
                 return;
             }
@@ -82,7 +82,7 @@ class UserController extends Controller
                 'role_id' => (int)$role_id
             ]);
 
-            $_SESSION['success_message'] = 'User successfully created!';
+            $_SESSION['success_message'] = 'Usuário criado com sucesso!';
             header('Location: /users');
             exit;
         }
@@ -100,7 +100,7 @@ class UserController extends Controller
         $roles = $this->roleModel->all();
 
         $this->view('users/edit', [
-            'title' => 'Edit User',
+            'title' => 'Editar Usuário',
             'user' => $user,
             'roles' => $roles
         ]);
@@ -118,15 +118,15 @@ class UserController extends Controller
                 $user = $this->userModel->find($id);
                 $roles = $this->roleModel->all();
                 $this->view('users/edit', [
-                    'title' => 'Edit User',
+                    'title' => 'Editar Usuário',
                     'user' => $user,
                     'roles' => $roles,
-                    'error' => 'Name, Email and Role are required.'
+                    'error' => 'Nome, E-mail e Função são obrigatórios.'
                 ]);
                 return;
             }
 
-            // Optional password update
+            // Atualização opcional de senha
             if (!empty($_POST['password'])) {
                 $this->userModel->update($id, [
                     'name' => $name,
@@ -142,7 +142,7 @@ class UserController extends Controller
                 ]);
             }
 
-            $_SESSION['success_message'] = 'User successfully updated!';
+            $_SESSION['success_message'] = 'Usuário atualizado com sucesso!';
             header('Location: /users');
             exit;
         }
@@ -151,14 +151,14 @@ class UserController extends Controller
     public function destroy(int $id)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Prevent users from deleting themselves
+            // Evita que os usuários se deletem
             if ($id === $_SESSION['user_id']) {
                 header('Location: /users');
                 exit;
             }
 
             $this->userModel->delete($id);
-            $_SESSION['success_message'] = 'User successfully deleted!';
+            $_SESSION['success_message'] = 'Usuário excluído com sucesso!';
             header('Location: /users');
             exit;
         }

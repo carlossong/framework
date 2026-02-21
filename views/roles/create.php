@@ -2,13 +2,13 @@
 
 <div class="py-6 sm:px-0">
     <div class="mb-6">
-        <a href="/roles" class="text-sm font-medium text-primary hover:text-secondary transition">&larr; Back to roles</a>
+        <a href="/roles" class="text-sm font-medium text-primary hover:text-secondary transition">&larr; Voltar para funções</a>
     </div>
 
     <div class="max-w-2xl bg-white shadow overflow-hidden sm:rounded-lg border border-gray-100">
         <div class="px-4 py-5 sm:px-6 bg-gray-50 border-b border-gray-200">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Create Role</h3>
-            <p class="mt-1 text-sm text-gray-500">Add a new role and assign permissions.</p>
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Criar Função</h3>
+            <p class="mt-1 text-sm text-gray-500">Adicionar uma nova função e atribuir permissões.</p>
         </div>
         
         <div class="px-4 py-5 sm:p-6">
@@ -23,14 +23,14 @@
             <?php endif; ?>
 
             <form action="/roles/create" method="POST" class="space-y-6">
-                <?php component('input', ['name' => 'name', 'label' => 'Role Name (e.g. Editor)', 'required' => true]); ?>
-                <?php component('input', ['name' => 'description', 'label' => 'Friendly Description']); ?>
+                <?php component('input', ['name' => 'name', 'label' => 'Nome da Função (ex: Editor)', 'required' => true]); ?>
+                <?php component('input', ['name' => 'description', 'label' => 'Descrição Amigável']); ?>
 
                 <div class="pt-4 border-t border-gray-200 mt-4">
-                    <h3 class="text-md font-medium text-gray-900 mb-4">Assign Permissions</h3>
+                    <h3 class="text-md font-medium text-gray-900 mb-4">Atribuir Permissões</h3>
                     <div class="bg-white rounded-md -space-y-px">
                         <?php if (empty($permissions)): ?>
-                            <p class="text-sm text-gray-500">No permissions available. Create some first.</p>
+                            <p class="text-sm text-gray-500">Nenhuma permissão disponível. Crie algumas primeiro.</p>
                         <?php else: ?>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <?php foreach ($permissions as $permission): ?>
@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="pt-4">
-                    <?php component('button', ['text' => 'Save Role', 'class' => 'w-full']); ?>
+                    <?php component('button', ['text' => 'Salvar Função', 'class' => 'w-full']); ?>
                 </div>
             </form>
         </div>

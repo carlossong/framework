@@ -3,10 +3,10 @@
 <div class="py-6 sm:px-0">
     <div class="mb-6 flex justify-between items-center">
         <div>
-            <h2 class="text-3xl font-extrabold text-gray-900">Manage Users</h2>
-            <p class="mt-2 text-sm text-gray-600">A list of all users in your application.</p>
+            <h2 class="text-3xl font-extrabold text-gray-900">Gerenciar Usuários</h2>
+            <p class="mt-2 text-sm text-gray-600">Uma lista de todos os usuários da sua aplicação.</p>
         </div>
-        <?php component('button', ['text' => 'Add User', 'href' => '/users/create', 'class' => 'inline-flex items-center']); ?>
+        <?php component('button', ['text' => 'Adicionar Usuário', 'href' => '/users/create', 'class' => 'inline-flex items-center']); ?>
     </div>
 
     <div class="flex flex-col">
@@ -17,19 +17,19 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Name
+                                    Nome
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Email
+                                    E-mail
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Role
+                                    Função
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Registered
+                                    Registrado em
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
-                                    <span class="sr-only">Actions</span>
+                                    <span class="sr-only">Ações</span>
                                 </th>
                             </tr>
                         </thead>
@@ -44,20 +44,20 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            <?= htmlspecialchars($user['role_name'] ?? 'None') ?>
+                                            <?= htmlspecialchars($user['role_name'] ?? 'Nenhuma') ?>
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <?= htmlspecialchars(date('M j, Y', strtotime($user['created_at']))) ?>
+                                        <?= htmlspecialchars(date('d/m/Y', strtotime($user['created_at']))) ?>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <a href="/users/<?= $user['id'] ?>/edit" class="text-primary hover:text-secondary mr-3 text-medium">Edit</a>
+                                        <a href="/users/<?= $user['id'] ?>/edit" class="text-primary hover:text-secondary mr-3 text-medium">Editar</a>
                                         <?php if ($user['id'] !== $_SESSION['user_id']): ?>
                                             <form action="/users/<?= $user['id'] ?>/delete" method="POST" class="inline" onsubmit="confirmDeletion(event, this)">
-                                                <button type="submit" class="text-red-600 hover:text-red-900 font-medium">Delete</button>
+                                                <button type="submit" class="text-red-600 hover:text-red-900 font-medium">Deletar</button>
                                             </form>
                                         <?php else: ?>
-                                            <span class="text-gray-400 cursor-not-allowed">Delete</span>
+                                            <span class="text-gray-400 cursor-not-allowed">Deletar</span>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
