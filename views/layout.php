@@ -18,9 +18,21 @@
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <a href="/dashboard" class="text-gray-600 hover:text-gray-900 font-medium self-center">Dashboard</a>
                         <?php if (is_admin()): ?>
-                            <a href="/users" class="text-gray-600 hover:text-gray-900 font-medium self-center">Users</a>
-                            <a href="/roles" class="text-gray-600 hover:text-gray-900 font-medium self-center">Roles</a>
-                            <a href="/permissions" class="text-gray-600 hover:text-gray-900 font-medium self-center">Permissions</a>
+                            <!-- Config Dropdown -->
+                            <div class="relative self-center">
+                                <button type="button" id="config-menu-button" class="text-gray-600 hover:text-gray-900 font-medium inline-flex items-center focus:outline-none">
+                                    Config
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <!-- Dropdown Menu -->
+                                <div id="config-menu" class="absolute right-0 mt-2 w-48 z-50 hidden">
+                                    <div class="bg-white rounded-md shadow-lg py-1 border border-gray-100">
+                                        <a href="/users" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary transition">Users</a>
+                                        <a href="/roles" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary transition">Roles</a>
+                                        <a href="/permissions" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary transition">Permissions</a>
+                                    </div>
+                                </div>
+                            </div>
                         <?php endif; ?>
                         <span class="text-gray-400 self-center">|</span>
                         <span class="text-gray-600 self-center">Welcome, <?= htmlspecialchars($_SESSION['user_name']) ?>!</span>
@@ -47,8 +59,24 @@
             </div>
     </div>
 
-    <!-- Global SweetAlert triggers -->
+    <!-- Global Base Scripts -->
     <script>
+        // Dropdown toggle logic
+        document.addEventListener('click', function(event) {
+            var menu = document.getElementById('config-menu');
+            var button = document.getElementById('config-menu-button');
+            if (!menu || !button) return;
+            
+            // If clicked on the button, toggle the menu
+            if (button.contains(event.target)) {
+                menu.classList.toggle('hidden');
+            } 
+            // If clicked outside both menu and button, close the menu
+            else if (!menu.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+
         function confirmDeletion(event, form) {
             event.preventDefault();
             Swal.fire({
