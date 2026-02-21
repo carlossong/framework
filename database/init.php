@@ -10,9 +10,15 @@ $db = Database::connect();
 $db->beginTransaction();
 
 try {
+    // Drop all existing tables to guarantee a clean slate
+    $tables = ['role_permissions', 'users', 'permissions', 'roles'];
+    foreach ($tables as $table) {
+        $db->exec("DROP TABLE IF EXISTS {$table}");
+    }
+
     // 1. Create Roles Table
     $db->exec("
-        CREATE TABLE IF NOT EXISTS roles (
+        CREATE TABLE roles (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT UNIQUE NOT NULL,
             description TEXT,
@@ -23,7 +29,7 @@ try {
 
     // 2. Create Permissions Table
     $db->exec("
-        CREATE TABLE IF NOT EXISTS permissions (
+        CREATE TABLE permissions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT UNIQUE NOT NULL,
             description TEXT,
@@ -34,7 +40,7 @@ try {
 
     // 3. Create Role_Permissions Pivot Table
     $db->exec("
-        CREATE TABLE IF NOT EXISTS role_permissions (
+        CREATE TABLE role_permissions (
             role_id INTEGER NOT NULL,
             permission_id INTEGER NOT NULL,
             PRIMARY KEY (role_id, permission_id),
@@ -43,10 +49,9 @@ try {
         )
     ");
 
-    // 4. Update Users Table (Since SQLite doesn't fully support DROP COLUMN easily in older versions, we recreate)
-    // Create new users table
+    // 4. Create Users Table
     $db->exec("
-        CREATE TABLE IF NOT EXISTS users_new (
+        CREATE TABLE users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             email TEXT UNIQUE NOT NULL,
@@ -58,14 +63,12 @@ try {
         )
     ");
 
-    // We don't copy old data for this exercise, we'll just seed fresh.
-    $db->exec("DROP TABLE IF EXISTS users");
-    $db->exec("ALTER TABLE users_new RENAME TO users");
-
     $db->commit();
-    echo "RBAC schema deployed successfully.\n";
+    echo "Database initialized successfully with fresh tables.\n";
 
 } catch (PDOException $e) {
-    $db->rollBack();
-    echo "Error deploying RBAC schema: " . $e->getMessage() . "\n";
+    if ($db->inTransaction()) {
+        $db->rollBack();
+    }
+    echo "Error initializing database: " . $e->getMessage() . "\n";
 }
