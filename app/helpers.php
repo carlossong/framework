@@ -14,3 +14,17 @@ if (!function_exists('component')) {
         }
     }
 }
+
+if (!function_exists('is_admin')) {
+    function is_admin(): bool
+    {
+        return isset($_SESSION['role_name']) && strtolower($_SESSION['role_name']) === 'admin';
+    }
+}
+
+if (!function_exists('has_permission')) {
+    function has_permission(string $permissionName): bool
+    {
+        return isset($_SESSION['permissions']) && in_array($permissionName, $_SESSION['permissions'], true);
+    }
+}

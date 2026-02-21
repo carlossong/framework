@@ -22,10 +22,22 @@
             <form action="/users/create" method="POST" class="space-y-6">
                 <?php component('input', ['name' => 'name', 'label' => 'Name', 'required' => true]); ?>
                 <?php component('input', ['name' => 'email', 'type' => 'email', 'label' => 'Email address', 'autocomplete' => 'email', 'required' => true]); ?>
-                <?php component('input', ['name' => 'password', 'type' => 'password', 'label' => 'Password', 'required' => true]); ?>
+                <?php component('input', ['type' => 'password', 'name' => 'password', 'label' => 'Password', 'required' => true]); ?>
+
+                <div class="space-y-1">
+                    <label for="role_id" class="block text-sm font-medium text-gray-700">Role</label>
+                    <div class="mt-1">
+                        <select id="role_id" name="role_id" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            <option value="">Select a role...</option>
+                            <?php foreach ($roles as $role): ?>
+                                <option value="<?= $role['id'] ?>"><?= htmlspecialchars($role['name']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
 
                 <div class="pt-2">
-                    <?php component('button', ['text' => 'Save User', 'class' => 'w-full']); ?>
+                    <?php component('button', ['text' => 'Save User', 'class' => 'w-full active:scale-95 transition-all']); ?>
                 </div>
             </form>
         </div>

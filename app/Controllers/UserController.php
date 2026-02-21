@@ -9,21 +9,26 @@ use App\Models\User;
 class UserController extends Controller
 {
     private User $userModel;
+    private \App\Models\Role $roleModel;
 
     public function __construct()
     {
-        // Protect all User CRUD routes
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: /login');
+        // Protect all User CRUD routes - Must be logged in and be an admin
+        if (!isset($_SESSION['user_id']) || !is_admin()) {
+            $_SESSION['error_message'] = 'You do not have permission to access this area.';
+            header('Location: /dashboard');
             exit;
         }
 
         $this->userModel = new User();
+        $this->roleModel = new \App\Models\Role();
     }
 
     public function index()
     {
-        $users = $this->userModel->all();
+        $db = \App\Core\Database::connect();
+        $stmt = $db->query("SELECT users.*, roles.name as role_name FROM users LEFT JOIN roles ON users.role_id = roles.id ORDER BY users.id DESC");
+        $users = $stmt->fetchAll();
 
         $this->view('users/index', [
             'title' => 'Manage Users',
@@ -33,8 +38,10 @@ class UserController extends Controller
 
     public function create()
     {
+        $roles = $this->roleModel->all();
         $this->view('users/create', [
-            'title' => 'Create User'
+            'title' => 'Create User',
+            'roles' => $roles
         ]);
     }
 
@@ -45,27 +52,34 @@ class UserController extends Controller
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
 
+            $role_id = $_POST['role_id'] ?? null;
+
             // Basic validation
-            if (empty($name) || empty($email) || empty($password)) {
+            if (empty($name) || empty($email) || empty($password) || empty($role_id)) {
+                $roles = $this->roleModel->all();
                 $this->view('users/create', [
                     'title' => 'Create User',
+                    'roles' => $roles,
                     'error' => 'All fields are required.'
                 ]);
                 return;
             }
 
             if ($this->userModel->findByEmail($email)) {
+                $roles = $this->roleModel->all();
                 $this->view('users/create', [
                     'title' => 'Create User',
+                    'roles' => $roles,
                     'error' => 'Email is already in use.'
                 ]);
                 return;
             }
 
-            $this->userModel->create([
+            $this->userModel->insert([
                 'name' => $name,
                 'email' => $email,
-                'password' => $password
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'role_id' => (int)$role_id
             ]);
 
             $_SESSION['success_message'] = 'User successfully created!';
@@ -83,9 +97,12 @@ class UserController extends Controller
             exit;
         }
 
+        $roles = $this->roleModel->all();
+
         $this->view('users/edit', [
             'title' => 'Edit User',
-            'user' => $user
+            'user' => $user,
+            'roles' => $roles
         ]);
     }
 
@@ -95,12 +112,16 @@ class UserController extends Controller
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
 
-            if (empty($name) || empty($email)) {
+            $role_id = $_POST['role_id'] ?? null;
+
+            if (empty($name) || empty($email) || empty($role_id)) {
                 $user = $this->userModel->find($id);
+                $roles = $this->roleModel->all();
                 $this->view('users/edit', [
                     'title' => 'Edit User',
                     'user' => $user,
-                    'error' => 'Name and Email are required.'
+                    'roles' => $roles,
+                    'error' => 'Name, Email and Role are required.'
                 ]);
                 return;
             }
@@ -110,12 +131,14 @@ class UserController extends Controller
                 $this->userModel->update($id, [
                     'name' => $name,
                     'email' => $email,
-                    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT)
+                    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                    'role_id' => (int)$role_id
                 ]);
             } else {
                 $this->userModel->update($id, [
                     'name' => $name,
-                    'email' => $email
+                    'email' => $email,
+                    'role_id' => (int)$role_id
                 ]);
             }
 

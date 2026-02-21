@@ -24,6 +24,21 @@ class AuthController extends Controller
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
+            
+            // RBAC Session Store
+            $roleId = $user['role_id'] ? (int)$user['role_id'] : null;
+            if ($roleId) {
+                $role = $userModel->getRole($roleId);
+                $_SESSION['role_name'] = $role ? $role['name'] : 'User';
+                
+                // Get permission names
+                $permissions = $userModel->getPermissions($roleId);
+                $_SESSION['permissions'] = array_column($permissions, 'name');
+            } else {
+                $_SESSION['role_name'] = 'User';
+                $_SESSION['permissions'] = [];
+            }
+
             header('Location: /dashboard');
             exit;
         }
@@ -63,10 +78,11 @@ class AuthController extends Controller
             return;
         }
 
-        $userModel->create([
+        $userModel->insert([
             'name' => $name,
             'email' => $email,
-            'password' => $password
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'role_id' => 2 // Default User role
         ]);
 
         header('Location: /login');
