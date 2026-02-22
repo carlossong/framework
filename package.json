@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build:css",
     "build:css": "npx @tailwindcss/cli -i ./resources/css/app.css -o ./public/css/app.css",
+    "dev": "npm run dev:css",
     "dev:css": "npx @tailwindcss/cli -i ./resources/css/app.css -o ./public/css/app.css --watch"
   },
   "keywords": [],

@@ -36,9 +36,11 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = $this->permissionModel->all();
+        $groupedPermissions = $this->groupPermissions($permissions);
+        
         $this->view('roles/create', [
             'title' => 'Criar Função',
-            'permissions' => $permissions
+            'groupedPermissions' => $groupedPermissions
         ]);
     }
 
@@ -51,7 +53,12 @@ class RoleController extends Controller
 
             if (empty($name)) {
                 $permissions = $this->permissionModel->all();
-                $this->view('roles/create', ['title' => 'Criar Função', 'permissions' => $permissions, 'error' => 'O nome é obrigatório.']);
+                $groupedPermissions = $this->groupPermissions($permissions);
+                $this->view('roles/create', [
+                    'title' => 'Criar Função', 
+                    'groupedPermissions' => $groupedPermissions, 
+                    'error' => 'O nome é obrigatório.'
+                ]);
                 return;
             }
 
@@ -83,13 +90,15 @@ class RoleController extends Controller
         }
 
         $permissions = $this->permissionModel->all();
+        $groupedPermissions = $this->groupPermissions($permissions);
+        
         $rolePermissions = $this->roleModel->getPermissions($id);
         $rolePermissionIds = array_column($rolePermissions, 'id');
 
         $this->view('roles/edit', [
             'title' => 'Editar Função',
             'role' => $role,
-            'permissions' => $permissions,
+            'groupedPermissions' => $groupedPermissions,
             'rolePermissionIds' => $rolePermissionIds
         ]);
     }
@@ -104,13 +113,14 @@ class RoleController extends Controller
             if (empty($name)) {
                 $role = $this->roleModel->find($id);
                 $permissions = $this->permissionModel->all();
+                $groupedPermissions = $this->groupPermissions($permissions);
                 $rolePermissions = $this->roleModel->getPermissions($id);
                 $rolePermissionIds = array_column($rolePermissions, 'id');
                 
                 $this->view('roles/edit', [
                     'title' => 'Editar Função',
                     'role' => $role,
-                    'permissions' => $permissions,
+                    'groupedPermissions' => $groupedPermissions,
                     'rolePermissionIds' => $rolePermissionIds,
                     'error' => 'O nome é obrigatório.'
                 ]);
@@ -128,6 +138,17 @@ class RoleController extends Controller
             header('Location: /roles');
             exit;
         }
+    }
+
+    private function groupPermissions(array $permissions): array
+    {
+        $grouped = [];
+        foreach ($permissions as $permission) {
+            $parts = explode('_', $permission['name'], 2);
+            $resource = count($parts) > 1 ? $parts[1] : 'geral';
+            $grouped[$resource][] = $permission;
+        }
+        return $grouped;
     }
 
     public function destroy(int $id)
